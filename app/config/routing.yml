@@ -1,0 +1,14 @@
+coordinate:
+    resource: "@CoordinateBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+person:
+    resource: "@PersonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+site:
+    resource: "@SiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
