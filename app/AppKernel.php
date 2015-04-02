@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new PersonBundle\PersonBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new CoordinateBundle\CoordinateBundle(),
+            new CommonBundle\CommonBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
