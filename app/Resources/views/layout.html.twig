@@ -9,25 +9,48 @@
         </title>
         
         {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+           <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
             {% stylesheets '../app/Resources/public/css/*' %}
                 <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
         {% endblock stylesheets%}
+        
+        {% block javascripts %}
+            {% javascripts
+                '../vendor/components/jquery/jquery.min.js'
+                '../vendor/components/jqueryui/jquery-ui.min.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+{#            <script src="{{ asset('js/jquery.js') }}"></script>#}
+            <script src="{{ asset('js/bootstrap.js') }}"></script>
+            {% javascripts "../app/Resources/public/js/*" %}
+                <script src="{{ asset_url }}" type="text/javascript"></script>
+            {% endjavascripts %}
+        {% endblock javascripts%}
+      
+        <script>
+            $(document).ready(function(){
+            });
+        </script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     
     <body>
-    <div class="container">
-    {% block nav %}
-        {% include 'nav.html.twig' %}
-    {% endblock nav%}    
+        {% block nav_header %}
+            {% include 'nav_header.html.twig' %}
+        {% endblock nav_header%}    
+        
+        <div class="container">
+            {% block body %}
+            {% endblock body%}
+        </div> <!-- /container -->
        
-    {% block body %}
-    {% endblock body%}
-    
-    </div> <!-- /container -->
-        {% block javascripts %}
-        {% endblock javascripts%}
+        {% block nav_footer %}
+{#                {% include 'nav_footer.html.twig' %}#}
+        {% endblock nav_footer%}  
+
+
+
     </body>
 </html>
