@@ -1,7 +1,13 @@
-{% extends "::base.html.twig" %}
+{% extends 'PersonBundle::layout.html.twig' %}
+
+{% import 'CommonBundle:Macro:show.html.twig' as show %}
 
 {% block title %}PersonBundle:ClientController:show{% endblock %}
 
 {% block body %}
-<h1>Welcome to the ClientController:show page</h1>
+     {{ show.property('Prenom', entity.person.firstName) }}
+     {{ show.property('Nom', entity.person.lastName) }}
+     {{ show.property('Date de Naissance', entity.person.birthday.date) }}
+     {{ show.property('Id', entity.Id) }}
+     {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
 {% endblock %}

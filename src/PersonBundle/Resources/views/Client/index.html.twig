@@ -1,7 +1,44 @@
-{% extends "::base.html.twig" %}
+{% extends 'PersonBundle::layout.html.twig' %}
 
-{% block title %}PersonBundle:ClientController:index{% endblock %}
+{% use 'PersonBundle:Client:Partial/blocks.html.twig' %}
+
+{#{% use 'CommonBundle:listing:listing.html.twig'%}#}
+
+{% block title %}PersonBundle:ClientController:index{% endblock title%}
 
 {% block body %}
-<h1>Welcome to the ClientController:index page</h1>
-{% endblock %}
+    
+    {{ block('actions') }}
+    <h1>Liste des clients</h1>
+    
+    <div class='col-lg-8 col-xs-12'>
+    {#{{ block('listing') }}#}
+    {% block listing %}
+    <table class="table table-hover table-striped ">
+        <caption>{% block caption %}{% endblock caption%}</caption>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Date de naissance</th>
+                <th>Date d'enregistrement</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for entity in entities %}
+                <tr data-href="{{ path('client_show', {'id': entity.id })}} ">
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.person.firstName }}</td>
+                    <td>{{ entity.person.lastName }}</td>
+                    <td>{{ entity.person.birthday.date}}</td>
+                    <td>{{ entity.registerDate.date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock listing%}
+
+    </div>
+{% endblock body%}

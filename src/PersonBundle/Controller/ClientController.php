@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CommonBundle\Controller\BaseController;
 use PersonBundle\Form\ClientType;
 use PersonBundle\Entity\Client;
+use PersonBundle\Entity\Person;
 
 /**
  * @Route("/client")
@@ -15,47 +16,55 @@ use PersonBundle\Entity\Client;
 class ClientController extends BaseController
 {
     /**
-     * @Route("/index")
+     * @Route("/", name="client_index")
      * @Template()
      */
     public function indexAction()
     {
-        return array(
-                // ...
-            );    }
-
+        $entities = $this->getDoctrine()     
+            ->getRepository('PersonBundle:Client')
+            ->findAll();
+        
+        return $this->render(
+            'PersonBundle:Client:index.html.twig',
+            array('entities' => $entities)
+        );
+    }
             
     /**
-     * @Route("/add")
+     * @Route("/add", name="client_add")
      * @Template()
      */
     public function addAction(Request $request)
     {
         $client = new Client();
-        $form = $this->createForm(new ClientType());
+        $form = $this->createForm(new ClientType(), $client);
+        $form->add('save', 'submit');
 
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($client);
-            $em->flush($client);
-//            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-            return $this->redirect($this->render('PersonBundle:Client:show.html.twig'));
+            $em->flush();
+            return $this->indexAction();
         }
-        return $this->render('PersonBundle:Client:add.html.twig', array(
-                    'form' => $form->createView(),
-                ));
+        return $this->render(
+            'PersonBundle:Client:add.html.twig', 
+            array('form' => $form->createView())
+        );
     }
             
     /**
-     * @Route("/show")
-     * @Template()
+     * @Route("/show/{id}", name="client_show")
+     * @Template("PersonBundle:Client:show.html.twig")
      */
-    public function showAction()
+    public function showAction($id)
     {
-        return array(
-                // ...
-            );    }
-
+        $entity = $this->getDoctrine()     
+            ->getRepository('PersonBundle:Client')
+            ->find($id);
+        
+        return array('entity' => $entity);
+    }
     /**
      * @Route("/edit")
      * @Template()

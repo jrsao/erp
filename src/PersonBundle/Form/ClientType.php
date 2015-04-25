@@ -16,7 +16,6 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('person', new PersonType())
-            ->add('save', 'submit')
         ;
     }
     

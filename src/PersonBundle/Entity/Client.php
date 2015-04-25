@@ -5,6 +5,8 @@ namespace PersonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use PersonBundle\Entity\Person;
 
+use DateTime;
+
 /**
  * Client
  *
@@ -14,10 +16,10 @@ use PersonBundle\Entity\Person;
 class Client
 {
     /**
-     * @ORM\OneToOne(targetEntity="Person", inversedBy="client")
+     * @ORM\OneToOne(targetEntity="Person", inversedBy="client", cascade={"persist"})
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      **/
-    private $person;
+    protected $person;
     
     /**
      * @var integer
@@ -34,6 +36,11 @@ class Client
      * @ORM\Column(name="registerDate", type="datetime")
      */
     private $registerDate;
+    
+    public function __construct()
+    {
+        $this->registerDate = new DateTime;
+    }
     
     /**
      * Get id

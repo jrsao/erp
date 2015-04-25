@@ -22,7 +22,7 @@ class Person
     /**
      * @ORM\OneToOne(targetEntity="Client", mappedBy="person")
      **/
-    private $client;
+   protected $client;
     
     /**
      * @var integer

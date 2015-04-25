@@ -18,7 +18,6 @@ class PersonType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('birthday')
-            ->add('client')
         ;
     }
     
