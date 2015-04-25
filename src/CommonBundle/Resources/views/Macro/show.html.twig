@@ -1,0 +1,6 @@
+{% macro property(value, label) %}
+    <div class="field-container">
+        <span class="field-label col-xs-6 col-md-6  ">{% if value is defined and value is not empty %}{{ value }}{% endif %}</span>
+        <span class="field-value">{% if label is defined and label is not empty %}{{ label }}{% endif %}</span>
+    </div>
+{% endmacro %}
