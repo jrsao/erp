@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use PersonBundle\Entity\Person;
 use CoordinateBundle\Entity\Country;
 use CoordinateBundle\Entity\State;
+use CoordinateBundle\Entity\City;
 
 /**
  * Address
@@ -16,19 +17,25 @@ use CoordinateBundle\Entity\State;
 class Address
 {
     /**
-     * @ORM\ManyToOne(targetEntity="State", inversedBy="address")
+     * @ORM\ManyToOne(targetEntity="State", inversedBy="address", cascade={"persist"})
      * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      **/
     private $state;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="address", cascade={"persist"})
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     **/
+    private $city;
    
     /**
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="address")
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="address", cascade={"persist"})
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      **/
     private $country;
     
     /**
-     * @ORM\ManyToOne(targetEntity="PersonBundle\Entity\Person", inversedBy="address")
+     * @ORM\ManyToOne(targetEntity="PersonBundle\Entity\Person", inversedBy="address", cascade={"persist"})
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      **/
     private $person;
@@ -36,7 +43,7 @@ class Address
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -45,21 +52,21 @@ class Address
     /**
      * @var integer
      *
-     * @ORM\Column(name="streetNumber", type="integer")
+     * @ORM\Column(name="streetNumber", type="integer", nullable=false)
      */
     private $streetNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="string", length=255)
+     * @ORM\Column(name="street", type="string", length=255, nullable=false)
      */
     private $street;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="zipCode", type="string", length=15)
+     * @ORM\Column(name="zipCode", type="string", length=15, nullable=true)
      */
     private $zipCode;
 
@@ -211,5 +218,28 @@ class Address
     public function getState()
     {
         return $this->state;
+    }
+    
+    /**
+     * Set City
+     *
+     * @param \City $city
+     * @return Address
+     */
+    public function setCity(City $city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \City 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }

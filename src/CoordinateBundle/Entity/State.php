@@ -3,17 +3,18 @@
 namespace CoordinateBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * State
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="CoordinateBundle\Entity\StateRepository")
  */
 class State
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="country")
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="country", cascade={"persist"})
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      **/
     private $country;
@@ -26,7 +27,7 @@ class State
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -35,18 +36,22 @@ class State
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=15)
+     * @ORM\Column(name="code", type="string", length=15, nullable=true)
      */
     private $code;
 
-
+    public function __construct()
+    {
+        $this->addresses = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -104,29 +109,6 @@ class State
     }
     
     /**
-     * Set addresses
-     *
-     * @param \Adress $addresses
-     * @return State
-     */
-    public function setAddresses($addresses)
-    {
-        $this->addresses = $addresses;
-
-        return $this;
-    }
-
-    /**
-     * Get addresses
-     *
-     * @return \Address 
-     */
-    public function getAddresses()
-    {
-        return $this->addresses ;
-    }
-    
-    /**
      * Set Country
      *
      * @param \Country $country
@@ -147,5 +129,56 @@ class State
     public function getCountry()
     {
         return $this->country;
+    }
+    
+    /**
+     * Add address
+     *
+     * @param \Adress $address
+     * @return State
+     */
+    public function addAddress(Address $address)
+    {
+        $address->setState($this);
+        
+        $this->addresses[] = $address;
+        
+        return $this;
+    }
+    
+    /**
+     * remove address
+     *
+     * @param \Adress $address
+     * @return State
+     */
+    public function removeAddress(Address $address)
+    {
+        $this->addresses->removeElement($address);
+        
+        return $this;
+    }
+    
+    /**
+     * Set addresses
+     *
+     * @param \Adress $addresses
+     * @return State
+     */
+    public function setAddresses($addresses)
+    {
+        $this->addresses = $addresses;
+
+        return $this;
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Address 
+     */
+    public function getAddresses()
+    {
+        return $this->addresses ;
     }
 }

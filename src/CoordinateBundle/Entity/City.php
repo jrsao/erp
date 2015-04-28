@@ -6,18 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Country
+ * City
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="CoordinateBundle\Entity\CountryRepository")
+ * @ORM\Entity(repositoryClass="CoordinateBundle\Entity\CityRepository")
  */
-class Country
+class City
 {
-    /**
-     * @ORM\OneToMany(targetEntity="CoordinateBundle\Entity\State", mappedBy="country")
-     **/
-    private $states;
-    
     /**
      * @ORM\OneToMany(targetEntity="CoordinateBundle\Entity\Address", mappedBy="country")
      **/
@@ -26,7 +21,7 @@ class Country
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer",nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -40,18 +35,12 @@ class Country
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="iso", type="string", length=15, nullable=true)
-     */
-    private $iso;
-
-    /**
      * @var integer
      *
      * @ORM\Column(name="code", type="integer", nullable=true)
      */
     private $code;
+
 
     public function __construct()
     {
@@ -92,29 +81,6 @@ class Country
     }
 
     /**
-     * Set iso
-     *
-     * @param string $iso
-     * @return Country
-     */
-    public function setIso($iso)
-    {
-        $this->iso = $iso;
-
-        return $this;
-    }
-
-    /**
-     * Get iso
-     *
-     * @return string 
-     */
-    public function getIso()
-    {
-        return $this->iso;
-    }
-
-    /**
      * Set code
      *
      * @param integer $code
@@ -138,37 +104,14 @@ class Country
     }
     
     /**
-     * Set states
-     *
-     * @param \Adress $states
-     * @return Country
-     */
-    public function setStates($states)
-    {
-        $this->states = $states;
-
-        return $this;
-    }
-
-    /**
-     * Get states
-     *
-     * @return \Country 
-     */
-    public function getStates()
-    {
-        return $this->states ;
-    }
-    
-    /**
      * Add address
      *
      * @param \Adress $address
-     * @return Country
+     * @return City
      */
     public function addAddress(Address $address)
     {
-        $address->setCountry($this);
+        $address->setCity($this);
         
         $this->addresses[] = $address;
         
@@ -179,7 +122,7 @@ class Country
      * remove address
      *
      * @param \Adress $address
-     * @return Country
+     * @return City
      */
     public function removeAddress(Address $address)
     {
@@ -192,7 +135,7 @@ class Country
      * Set addresses
      *
      * @param \Adress $addresses
-     * @return Country
+     * @return City
      */
     public function setAddresses($addresses)
     {
