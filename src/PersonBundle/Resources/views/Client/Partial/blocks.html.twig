@@ -1,3 +1,10 @@
 {% block actions %}
    <a href="{{ path('client_add')}}">Ajouter un client</a>
 {% endblock actions%}
+
+{% block showActions %}
+    {% if entity.person is defined and entity.person is not null %}
+         <a href="{{ path('address_client_add', {'personId': entity.person.id })}}">Ajouter une addresse</a><br />
+         <a href="{{ path('phone_number_client_add', {'personId': entity.person.id })}}">Ajouter un numero de telephone</a>
+    {% endif %}
+{% endblock showActions %}

@@ -21,7 +21,7 @@ class ClientController extends BaseController
      */
     public function indexAction()
     {
-        $entities = $this->getDoctrine()     
+        $entities = $this->getDoctrine()
             ->getRepository('PersonBundle:Client')
             ->findAll();
         

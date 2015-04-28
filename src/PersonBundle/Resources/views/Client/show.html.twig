@@ -2,12 +2,20 @@
 
 {% import 'CommonBundle:Macro:show.html.twig' as show %}
 
-{% block title %}PersonBundle:ClientController:show{% endblock %}
+{% use 'PersonBundle:Client:Partial/blocks.html.twig' %}
+
+{% block title %}Client {{ entity.person.lastName }}{% endblock title %}
+
+{% block pageTitle %}Client {{ entity.person.lastName }}{% endblock pageTitle%}
+
 
 {% block body %}
-     {{ show.property('Prenom', entity.person.firstName) }}
-     {{ show.property('Nom', entity.person.lastName) }}
-     {{ show.property('Date de Naissance', entity.person.birthday.date) }}
-     {{ show.property('Id', entity.Id) }}
-     {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
-{% endblock %}
+    
+    {{ block('showActions') }}
+        
+    {{ show.property('Prenom', entity.person.firstName) }}
+    {{ show.property('Nom', entity.person.lastName) }}
+    {{ show.property('Date de Naissance', entity.person.birthday.date) }}
+    {{ show.property('Id', entity.Id) }}
+    {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
+{% endblock body%}

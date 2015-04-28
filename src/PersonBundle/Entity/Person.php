@@ -3,8 +3,11 @@
 namespace PersonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 use PersonBundle\Entity\Client;
 use CoordinateBundle\Entity\Address;
+use CoordinateBundle\Entity\PhoneNumber;
 
 /**
  * Person
@@ -18,6 +21,11 @@ class Person
      * @ORM\OneToMany(targetEntity="CoordinateBundle\Entity\Address", mappedBy="person")
      **/
     private $addresses;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="CoordinateBundle\Entity\PhoneNumber", mappedBy="person")
+     **/
+    private $phoneNumbers;
     
     /**
      * @ORM\OneToOne(targetEntity="Client", mappedBy="person")
@@ -55,6 +63,12 @@ class Person
     private $birthday;
 
 
+    public function __construct()
+    {
+        $this->addresses = new ArrayCollection();
+        $this->$phoneNumbers = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -158,6 +172,33 @@ class Person
     }
     
     /**
+     * Add address
+     *
+     * @param \Adress $address
+     * @return Person
+     */
+    public function addAddress(Address $address)
+    {
+        $address->setPerson($this);
+        $this->addresses[] = $address;
+        
+        return $this;
+    }
+    
+    /**
+     * remove address
+     *
+     * @param \Adress $address
+     * @return Person
+     */
+    public function removeAddress(Address $address)
+    {
+        $this->addresses->removeElement($address);
+        
+        return $this;
+    }
+    
+    /**
      * Set addresses
      *
      * @param \Adress $addresses
@@ -178,5 +219,55 @@ class Person
     public function getAddresses()
     {
         return $this->addresses ;
+    }
+    
+        /**
+     * Add phoneNumber
+     *
+     * @param \Adress $phoneNumber
+     * @return Person
+     */
+    public function addPhoneNumber(PhoneNumber $phoneNumber)
+    {
+        $phoneNumber->setPerson($this);
+        $this->phoneNumbers[] = $phoneNumber;
+        
+        return $this;
+    }
+    
+    /**
+     * remove phoneNumber
+     *
+     * @param \Adress $phoneNumber
+     * @return Person
+     */
+    public function removePhoneNumber(PhoneNumber $phoneNumber)
+    {
+        $this->phoneNumbers->removeElement($phoneNumber);
+        
+        return $this;
+    }
+    
+    /**
+     * Set phoneNumbers
+     *
+     * @param \Adress $phoneNumbers
+     * @return Person
+     */
+    public function setPhoneNumbers($phoneNumbers)
+    {
+        $this->phoneNumbers = $phoneNumbers;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumbers
+     *
+     * @return \PhoneNumber 
+     */
+    public function getPhoneNumbers()
+    {
+        return $this->phoneNumbers ;
     }
 }
