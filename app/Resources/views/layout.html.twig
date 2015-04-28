@@ -42,8 +42,9 @@
         {% endblock nav_header%}    
         
         <div class="container">
-            {% block body %}
-            {% endblock body%}
+            <h1>{% block pageTitle %}{% endblock pageTitle %}</h1>
+                
+            {% block body %}{% endblock body%}
         </div> <!-- /container -->
        
         {% block nav_footer %}
