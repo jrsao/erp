@@ -1,0 +1,8 @@
+{% block box %}
+    {% for phoneNumber in phoneNumbers %}
+        <h4>Telephones</h4>
+        {{ show.property('Contact', phoneNumber.contact) }}
+        {{ show.property('Type', phoneNumber.type) }}
+        {{ show.property('No.', phoneNumber.phoneNumber) }}
+    {% endfor %}
+{% endblock %} 

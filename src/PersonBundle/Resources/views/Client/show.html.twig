@@ -18,4 +18,7 @@
     {{ show.property('Date de Naissance', entity.person.birthday.date) }}
     {{ show.property('Id', entity.Id) }}
     {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
+    
+    {% include 'CoordinateBundle:Address:Partial/box.html.twig' with {'addresses' : entity.person.addresses} %}
+    {% include 'CoordinateBundle:PhoneNumber:Partial/box.html.twig' with {'phoneNumbers' : entity.person.phoneNumbers} %}
 {% endblock body%}

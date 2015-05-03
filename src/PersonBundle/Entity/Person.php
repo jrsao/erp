@@ -66,7 +66,7 @@ class Person
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
-        $this->$phoneNumbers = new ArrayCollection();
+        $this->phoneNumbers = new ArrayCollection();
     }
     
     /**

@@ -1,0 +1,11 @@
+{% block box %}
+    {% for address in addresses %}
+        <h4>Addresse</h4>
+        {{ show.property('No. civique', address.streetNumber) }}
+        {{ show.property('Rue', address.street) }}
+        {{ show.property('Ville', address.city.name) }}
+        {{ show.property('Province', address.state.name) }}
+        {{ show.property("Pays", address.country.name) }}
+        {{ show.property("Code postal", address.zipCode) }}
+    {% endfor %}
+{% endblock %} 
