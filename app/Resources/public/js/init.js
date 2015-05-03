@@ -1,6 +1,7 @@
 $(document).ready(function(){
     trRef();
-     $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker();
+    $( "#accordion" ).accordion();
 });
 
 var trRef = function() { 
