@@ -7,14 +7,14 @@
                 Welcome!
             {% endblock %}
         </title>
-        
+
         {% block stylesheets %}
-           <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+            <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
             {% stylesheets '../app/Resources/public/css/*' %}
-                <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
         {% endblock stylesheets%}
-        
+
         {% block javascripts %}
             {% javascripts
                 '../vendor/components/jquery/jquery.min.js'
@@ -22,36 +22,53 @@
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-{#            <script src="{{ asset('js/jquery.js') }}"></script>#}
+            {#            <script src="{{ asset('js/jquery.js') }}"></script>#}
             <script src="{{ asset('js/bootstrap.js') }}"></script>
             {% javascripts "../app/Resources/public/js/*" %}
-                <script src="{{ asset_url }}" type="text/javascript"></script>
+            <script src="{{ asset_url }}" type="text/javascript"></script>
             {% endjavascripts %}
         {% endblock javascripts%}
-      
+
         <script>
-            $(document).ready(function(){
+            $(document).ready(function () {
             });
         </script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    
+
     <body>
+        {% block header %}
+            {% include 'header.html.twig' %}
+        {% endblock header%}  
+
         {% block nav_header %}
-            {% include 'nav_header.html.twig' %}
+            {% include 'sidebar.html.twig' %}
         {% endblock nav_header%}    
         
-        <div class="container">
-            <h1>{% block pageTitle %}{% endblock pageTitle %}</h1>
-                
-            {% block body %}{% endblock body%}
-        </div> <!-- /container -->
-       
+        <!--main content start-->
+        <section id="main-content">
+            <section class="wrapper">
+                <div class="col-lg-12 mt">
+
+                    <div class="row content-panel">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <div class="invoice-body">
+                                <div class="pull-left"> 
+                                    {% block corporation %}{% endblock corporation %}
+                                </div><!-- /pull-left -->
+                                <div class="pull-right">
+                                    {% block pageTitle %}{% endblock pageTitle %}
+                                </div><!--/pull-right -->
+                    
+                                {% block body %}{% endblock body %}
+               
+                            </div><!--/col-lg-12 mt -->
+                        </div><!--/col-lg-10 col-lg-offset-1 -->
+                    </div><!--/row content-panel -->
+            </section><!--/wrapper -->
+        </section><!-- /MAIN CONTENT -->
         {% block nav_footer %}
-{#                {% include 'nav_footer.html.twig' %}#}
+            {#                {% include 'nav_footer.html.twig' %}#}
         {% endblock nav_footer%}  
-
-
-
     </body>
 </html>
