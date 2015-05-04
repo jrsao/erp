@@ -1,1 +1,10 @@
-{% block actions %}{% endblock actions%}
+{% block panelActions %}
+        <section class="panel panel-info">
+            <header class="panel-heading">
+                <h3 class="panel-title">{% block panelTitle %}Actions{% endblock panelTitle%}</h3>
+            </header>
+            <div class="panel-body">
+                <p>{% block actions %}{% endblock actions%}</p>
+            </div>
+        </section>
+{% endblock panelActions%}
