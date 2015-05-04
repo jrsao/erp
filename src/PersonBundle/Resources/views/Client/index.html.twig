@@ -1,44 +1,33 @@
-{% extends 'PersonBundle::layout.html.twig' %}
+{% extends 'PersonBundle:Client:Common/layout.html.twig' %}
 
-{% use 'PersonBundle:Client:Partial/blocks.html.twig' %}
+{% block pageTitle %}Liste des clients{% endblock pageTitle%}
 
-{#{% use 'CommonBundle:listing:listing.html.twig'%}#}
-
-{% block title %}PersonBundle:ClientController:index{% endblock title%}
+{% block leftSide %} {{ block('indexActions') }} {% endblock leftSide %}
 
 {% block body %}
-    
-    {{ block('actions') }}
-    <h1>Liste des clients</h1>
-    
-    <div class='col-lg-8 col-xs-12'>
-    {#{{ block('listing') }}#}
-    {% block listing %}
-    <table class="table table-hover table-striped ">
-        <caption>{% block caption %}{% endblock caption%}</caption>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Prenom</th>
-                <th>Nom</th>
-                <th>Date de naissance</th>
-                <th>Date d'enregistrement</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for entity in entities %}
-                <tr data-href="{{ path('client_show', {'id': entity.id })}} ">
-                    <td>{{ entity.id }}</td>
-                    <td>{{ entity.person.firstName }}</td>
-                    <td>{{ entity.person.lastName }}</td>
-                    <td>{{ entity.person.birthday.date}}</td>
-                    <td>{{ entity.registerDate.date }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endblock listing%}
-
-    </div>
+    {% embed "CommonBundle:Listing:listing.html.twig" with {'entities': entities} %}
+        
+        {% block showRoute %}
+            {{ path('client_show', {'id': entity.id })}}
+        {% endblock showRoute%}    
+        
+        {% block caption %}{% endblock caption%}
+        
+        {% block tableHeader %}
+            {{ listing.header('Id')}}
+            {{ listing.header('Prenom')}}
+            {{ listing.header('Nom')}}
+            {{ listing.header('Date de naissance')}}
+            {{ listing.header("Date d'enregistrement")}}
+        {% endblock tableHeader%}
+        
+        {% block tableBody %}
+            {{ listing.element( entity.id )}}
+            {{ listing.element( entity.person.firstName )}}
+            {{ listing.element( entity.person.lastName )}}
+            {{ listing.element( entity.person.birthday.date )}}
+            {{ listing.element( entity.registerDate.date )}}
+        {% endblock tableBody%}
+        
+    {% endembed %}
 {% endblock body%}

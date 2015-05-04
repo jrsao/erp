@@ -1,10 +1,29 @@
-{% block actions %}
-   <a href="{{ path('client_add')}}">Ajouter un client</a>
-{% endblock actions%}
+{% block indexActions %}
+    {% embed "CommonBundle:Partial:blocks.html.twig" %}
+        {% block actions %}
+            <a href="{{ path('client_add')}}">Ajouter un client</a>
+        {% endblock actions%}
+    {% endembed %}
+{% endblock indexActions %}
+
 
 {% block showActions %}
-    {% if entity.person is defined and entity.person is not null %}
-         <a href="{{ path('address_client_add', {'personId': entity.person.id })}}">Ajouter une addresse</a><br />
-         <a href="{{ path('phone_number_client_add', {'personId': entity.person.id })}}">Ajouter un numero de telephone</a>
-    {% endif %}
+        {% embed "CommonBundle:Partial:blocks.html.twig" %}
+        {% block actions %}
+            <a href="{{ path('client_index')}}">Retour a la liste</a><br />
+            {% if entity.person is defined and entity.person is not null %}
+                <a href="{{ path('address_client_add', {'personId': entity.person.id })}}">Ajouter une addresse</a><br />
+                <a href="{{ path('phone_number_client_add', {'personId': entity.person.id })}}">Ajouter un numero de telephone</a>
+            {% endif %}
+        {% endblock actions%}
+    {% endembed %}
 {% endblock showActions %}
+
+
+{% block formActions %}
+    {% embed "CommonBundle:Partial:blocks.html.twig" %}
+        {% block actions %}
+            <a href="{{ path('client_index')}}">Retour a la liste</a>
+        {% endblock actions%}
+    {% endembed %}
+{% endblock formActions %}

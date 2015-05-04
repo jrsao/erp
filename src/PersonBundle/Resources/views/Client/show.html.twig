@@ -1,18 +1,10 @@
-{% extends 'PersonBundle::layout.html.twig' %}
+{% extends 'PersonBundle:Client:Common/layout.html.twig' %}
 
-{% import 'CommonBundle:Macro:show.html.twig' as show %}
+{% block pageTitle %}Client {{ entity.person.lastName }}{% endblock pageTitle %}
 
-{% use 'PersonBundle:Client:Partial/blocks.html.twig' %}
-
-{% block title %}Client {{ entity.person.lastName }}{% endblock title %}
-
-{% block pageTitle %}Client {{ entity.person.lastName }}{% endblock pageTitle%}
-
+{% block leftSide %} {{ block('showActions') }} {% endblock leftSide %}
 
 {% block body %}
-    
-    {{ block('showActions') }}
-        
     {{ show.property('Prenom', entity.person.firstName) }}
     {{ show.property('Nom', entity.person.lastName) }}
     {{ show.property('Date de Naissance', entity.person.birthday.date) }}

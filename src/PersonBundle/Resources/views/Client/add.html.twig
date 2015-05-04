@@ -1,11 +1,11 @@
-{% extends 'PersonBundle::layout.html.twig' %}
+{% extends 'PersonBundle:Client:Common/layout.html.twig' %}
+
+{% block leftSide %} {{ block('formActions') }} {% endblock leftSide %}
+
+{% block pageTitle %}Ajout de client{% endblock pageTitle%}
 
 {% block body %}
-<h3>Ajout de client</h3>
-<div class="well">
-{#    {% form_theme form 'CommonBundle:Form:form_common.html.twig' %}
-    {{  form_row(form.startDate}) }}#}
-  {{ form(form) }}
-
-</div> 
-{% endblock %}
+    <div class="well">
+        {{ form(form) }}
+    </div> 
+{% endblock body%}
