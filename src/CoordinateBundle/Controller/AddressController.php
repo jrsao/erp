@@ -83,6 +83,44 @@ class AddressController extends BaseController
     {
         return $this->addFromPersonChild($request, $personId, 'client');
     }
+ 
+    /**
+     * @Route("/add/site/{siteId}", name="address_site_add")
+     * @Template()
+     */
+    public function addFromSiteAction(Request $request, $siteId)
+    {
+        if ($siteId == 0){
+            throw new Exception('id is needed in the function addAction from AddressController');
+        }
+        
+        $address = new Address();
+        $form = $this->createForm(new AddressType(), $address);
+        $form->add('save', 'submit');
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            
+            $site = $em->getRepository('SiteBundle:Site')->find($siteId);
+            
+            if ($site == null) {
+                throw new Exception('siteId is invalid  in the function addAction from AddressController');
+            }
+            
+            $site->addAddress($address);
+            $address->setSite($site);
+            
+            $em->persist($address);
+            $em->flush();
+            
+            return $this->redirect($this->generateUrl('site_show', array('id' => $site->getId()), 301));
+        }
+        
+        return $this->render(
+            'CoordinateBundle:Address:add.html.twig', 
+            array('form' => $form->createView())
+        );
+    }
             
     /**
      * @Route("/show/{id}", name="address_show")

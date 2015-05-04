@@ -7,6 +7,7 @@ use PersonBundle\Entity\Person;
 use CoordinateBundle\Entity\Country;
 use CoordinateBundle\Entity\State;
 use CoordinateBundle\Entity\City;
+use SiteBundle\Entity\Site;
 
 /**
  * Address
@@ -17,7 +18,7 @@ use CoordinateBundle\Entity\City;
 class Address
 {
     /**
-     * @ORM\ManyToOne(targetEntity="State", inversedBy="address", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="State", inversedBy="addresses", cascade={"persist"})
      * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      **/
     private $state;
@@ -39,6 +40,12 @@ class Address
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      **/
     private $person;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Site", inversedBy="address", cascade={"persist"})
+     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
+     **/
+    private $site;
     
     /**
      * @var integer
@@ -70,7 +77,11 @@ class Address
      */
     private $zipCode;
 
-
+    public function __toString()
+    {
+        return $this->getStreetNumber().' '.$this->getStreet().' '.$this->getCity();
+    }
+    
     /**
      * Get id
      *
@@ -172,6 +183,29 @@ class Address
     public function getPerson()
     {
         return $this->person;
+    }
+    
+    /**
+     * Set site
+     *
+     * @param \Site $site
+     * @return Address
+     */
+    public function setSite(Site $site)
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return \Site 
+     */
+    public function getSite()
+    {
+        return $this->site;
     }
             
     /**

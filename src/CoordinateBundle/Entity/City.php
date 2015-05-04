@@ -47,6 +47,11 @@ class City
         $this->addresses = new ArrayCollection();
     }
     
+    public function __toString()
+    {
+        return $this->getName();
+    }
+    
     /**
      * Get id
      *

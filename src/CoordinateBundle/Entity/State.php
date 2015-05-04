@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class State
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Country", inversedBy="country", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="states", cascade={"persist"})
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      **/
     private $country;

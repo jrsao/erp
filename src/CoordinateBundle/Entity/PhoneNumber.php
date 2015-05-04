@@ -4,6 +4,7 @@ namespace CoordinateBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use PersonBundle\Entity\Person;
+use SiteBundle\Entity\Site;
 
 /**
  * PhoneNumber
@@ -14,10 +15,16 @@ use PersonBundle\Entity\Person;
 class PhoneNumber
 {
     /**
-     * @ORM\ManyToOne(targetEntity="PersonBundle\Entity\Person", inversedBy="address", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="PersonBundle\Entity\Person", inversedBy="phoneNumbers", cascade={"persist"})
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      **/
     private $person;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="SiteBundle\Entity\Site", inversedBy="phoneNumbers", cascade={"persist"})
+     * @ORM\JoinColumn(name="site_id", referencedColumnName="id")
+     **/
+    private $site;
     
     /**
      * @var integer
@@ -81,6 +88,29 @@ class PhoneNumber
     public function getPerson()
     {
         return $this->person;
+    }
+    
+    /**
+     * Set site
+     *
+     * @param \Site $site
+     * @return Address
+     */
+    public function setSite(Site $site)
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * Get site
+     *
+     * @return \Site 
+     */
+    public function getSite()
+    {
+        return $this->site;
     }
     
     /**
