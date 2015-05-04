@@ -57,11 +57,12 @@
                         
                         <div class="col-lg-9">
                             <div class="invoice-body">
+                                <h2>{% block pageTitle %}{% endblock pageTitle %}</h2>
                                 <div class="pull-left"> 
-                                    {% block corporation %}{% endblock corporation %}
+                                    {% block pullLeft %}{% endblock pullLeft %}
                                 </div><!-- /pull-left -->
                                 <div class="pull-right">
-                                    {% block pageTitle %}{% endblock pageTitle %}
+                                    {% block pullRight %}{% endblock pullRight %}
                                 </div><!--/pull-right -->
                     
                                 {% block body %}{% endblock body %}
