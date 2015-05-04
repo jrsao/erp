@@ -1,0 +1,13 @@
+{% extends 'SiteBundle:Site:Common/layout.html.twig' %}
+
+{% block pageTitle %}Site {{ entity.name }}{% endblock pageTitle %}
+
+{% block leftSide %} {{ block('showActions') }} {% endblock leftSide %}
+
+{% block body %}
+    {{ show.property('Id', entity.Id) }}
+    {{ show.property('Nom', entity.name) }}
+    
+    {% include 'CoordinateBundle:Address:Partial/box.html.twig' with {'addresses' : entity.addresses} %}
+    {% include 'CoordinateBundle:PhoneNumber:Partial/box.html.twig' with {'phoneNumbers' : entity.phoneNumbers} %}
+{% endblock body%}

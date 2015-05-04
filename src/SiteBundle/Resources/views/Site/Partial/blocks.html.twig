@@ -1,0 +1,29 @@
+{% block indexActions %}
+    {% embed "CommonBundle:Partial:blocks.html.twig" %}
+        {% block actions %}
+            <a href="{{ path('site_add')}}">Ajouter un site</a>
+        {% endblock actions%}
+    {% endembed %}
+{% endblock indexActions %}
+
+
+{% block showActions %}
+        {% embed "CommonBundle:Partial:blocks.html.twig" %}
+        {% block actions %}
+            <a href="{{ path('site_index')}}">Retour a la liste</a><br />
+            {% if entity is defined and entity is not null %}
+                <a href="{{ path('address_site_add', {'siteId': entity.id })}}">Ajouter une addresse</a><br />
+                <a href="{{ path('phone_number_site_add', {'siteId': entity.id })}}">Ajouter un numero de telephone</a>
+            {% endif %}
+        {% endblock actions%}
+    {% endembed %}
+{% endblock showActions %}
+
+
+{% block formActions %}
+    {% embed "CommonBundle:Partial:blocks.html.twig" %}
+        {% block actions %}
+            <a href="{{ path('site_index')}}">Retour a la liste</a>
+        {% endblock actions%}
+    {% endembed %}
+{% endblock formActions %}
