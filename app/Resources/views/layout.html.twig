@@ -51,7 +51,11 @@
                 <div class="col-lg-12 mt">
 
                     <div class="row content-panel">
-                        <div class="col-lg-10 col-lg-offset-1">
+                        <div class="col-lg-2">
+                            {% block leftSide %}{% endblock leftSide %}
+                        </div>
+                        
+                        <div class="col-lg-9">
                             <div class="invoice-body">
                                 <div class="pull-left"> 
                                     {% block corporation %}{% endblock corporation %}
