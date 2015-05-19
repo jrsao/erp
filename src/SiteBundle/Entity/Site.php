@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use CoordinateBundle\Entity\Address;
 use CoordinateBundle\Entity\PhoneNumber;
+use SiteBundle\Entity\SpaceType;
 
 /**
  * Site
@@ -16,6 +17,11 @@ use CoordinateBundle\Entity\PhoneNumber;
  */
 class Site
 {
+    /**
+     * @ORM\OneToMany(targetEntity="SpaceType", mappedBy="site")
+     **/
+    private $spaceTypes;
+    
     /**
      * @ORM\OneToMany(targetEntity="CoordinateBundle\Entity\Address", mappedBy="site")
      **/
@@ -196,5 +202,55 @@ class Site
     public function getPhoneNumbers()
     {
         return $this->phoneNumbers ;
+    }
+    
+    /**
+     * Add spaceTypes
+     *
+     * @param \Adress $spaceTypes
+     * @return SpaceTypeType
+     */
+    public function addSpaceTypes(SpaceType $spaceTypes)
+    {
+        $spaceTypes->setSite($this);
+        $this->spaceTypes[] = $spaceTypes;
+        
+        return $this;
+    }
+    
+    /**
+     * remove spaceTypes
+     *
+     * @param \SpaceType $spaceTypes
+     * @return SpaceTypeType
+     */
+    public function removeSpaceTypes(SpaceType $spaceTypes)
+    {
+        $this->spaceTypes->removeElement($spaceTypes);
+        
+        return $this;
+    }
+    
+    /**
+     * Set spaceTypes
+     *
+     * @param \SpaceType $spaceTypes
+     * @return SpaceTypeType
+     */
+    public function setSpaceTypes(SpaceType $spaceTypes)
+    {
+        $this->spaceTypes = $spaceTypes;
+
+        return $this;
+    }
+
+    /**
+     * Get spaceTypes
+     *
+     * @return \SpaceTypes 
+     */
+    public function getSpaceTypes()
+    {
+        return $this->spaceTypes ;
     }
 }
