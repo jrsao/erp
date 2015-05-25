@@ -5,7 +5,7 @@ namespace PersonBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use CommonBundle\Controller\BaseController;
+use CommonBundle\Controller\CrudBaseController;
 use PersonBundle\Form\ClientType;
 use PersonBundle\Entity\Client;
 use PersonBundle\Entity\Person;
@@ -13,44 +13,50 @@ use PersonBundle\Entity\Person;
 /**
  * @Route("/client")
  */
-class ClientController extends BaseController
+class ClientController extends CrudBaseController
 {
+    protected function getRoutes()
+    {
+        return array(
+            'index' => 'client_index',
+            'show' => 'client_show',
+            'add' => 'client_add',
+            'edit' => 'client_edit',
+            'delete' => 'client_delete'
+        );
+    }
+    
+    protected function getRepository()
+    {
+        return $this->getDoctrine()->getRepository('PersonBundle:Client');
+    }
+    
+    protected function getFormType()
+    {
+        return new ClientType();
+    }
+
+    protected function getNewEntity()
+    {
+        return new Client();
+    }
+    
     /**
      * @Route("/", name="client_index")
-     * @Template()
+     * @Template("PersonBundle:Client:index.html.twig")
      */
     public function indexAction()
     {
-        $entities = $this->getDoctrine()
-            ->getRepository('PersonBundle:Client')
-            ->findAll();
-        
-        return $this->render(
-            'PersonBundle:Client:index.html.twig',
-            array('entities' => $entities)
-        );
+        return parent::indexAction();
     }
             
     /**
      * @Route("/add", name="client_add")
-     * @Template()
+     * @template("PersonBundle:Client:add.html.twig")
      */
     public function addAction(Request $request)
     {
-        $client = new Client();
-        $form = $this->createForm(new ClientType(), $client);
-        $form->add('save', 'submit');
-
-        if ($form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($client);
-            $em->flush();
-            return $this->indexAction();
-        }
-        return $this->render(
-            'PersonBundle:Client:add.html.twig', 
-            array('form' => $form->createView())
-        );
+        return parent::addAction($request);
     }
             
     /**
@@ -59,40 +65,24 @@ class ClientController extends BaseController
      */
     public function showAction($id)
     {
-        $entity = $this->getDoctrine()     
-            ->getRepository('PersonBundle:Client')
-            ->find($id);
-        
-        return array('entity' => $entity);
+        return parent::showAction($id);
     }
+    
     /**
-     * @Route("/edit")
-     * @Template()
+     * @Route("/edit/{id}", name="client_edit")
+     * @Template("PersonBundle:Client:edit.html.twig")
      */
-    public function editAction()
+    public function editAction(Request $request, $id)
     {
-        return array(
-                // ...
-            );    }
+        return parent::editAction($request,$id);
+    }
 
     /**
-     * @Route("/delete")
-     * @Template()
+     * @Route("/delete/{id}", name="client_delete")
+     * @Template("PersonBundle:Client:delete.html.twig")
      */
-    public function deleteAction()
+    public function deleteAction(Request $request, $id)
     {
-        return array(
-                // ...
-            );    }
-
-    /**
-     * @Route("/update")
-     * @Template()
-     */
-    public function updateAction()
-    {
-        return array(
-                // ...
-            );    }
-
+        return parent::deleteAction($request, $id);
+    }
 }

@@ -7,24 +7,50 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use CommonBundle\Controller\BaseController;
+use CommonBundle\Controller\CrudBaseController;
+
 use PersonBundle\Entity\Person;
 use PersonBundle\Form\PersonType;
 
 /**
  * @Route("/person")
  */
-class PersonController extends BaseController
+class PersonController extends Controller
 {
+    //TODO implement
+//    protected function getRoutes()
+//    {
+//        return array(
+//            'index' => 'address_index',
+//            'show' => 'address_show',
+//            'add' => 'address_add'
+//        );
+//    }
+//    
+//    protected function getRepository()
+//    {
+//        return $this->getDoctrine()->getRepository('PersonBundle:Person');
+//    }
+//    
+//    protected function getFormType()
+//    {
+//        return new AddressType();
+//    }
+//
+//    protected function getNewEntity()
+//    {
+//        return new Address();
+//    }
+    
     /**
      * @Route("/index")
      * @Template()
      */
     public function indexAction()
     {
-        return array(
-                // ...
-            );    }
+        return null;
+//        return parent::indexAction();
+    }
 
     /**
      * @Route("/create")

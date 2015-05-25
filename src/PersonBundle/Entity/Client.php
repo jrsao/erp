@@ -16,7 +16,7 @@ use DateTime;
 class Client
 {
     /**
-     * @ORM\OneToOne(targetEntity="Person", inversedBy="client", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Person", inversedBy="client", cascade={"remove"})
      * @ORM\JoinColumn(name="person_id", referencedColumnName="id")
      **/
     protected $person;

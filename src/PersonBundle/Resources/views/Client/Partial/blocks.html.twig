@@ -11,6 +11,8 @@
         {% embed "CommonBundle:Partial:blocks.html.twig" %}
         {% block actions %}
             <a href="{{ path('client_index')}}">Retour a la liste</a><br />
+            <a href="{{ path('client_edit', {'id': entity.id })}}">Modifier le client</a><br />
+            <a href="{{ path('client_delete', {'id': entity.id })}}">Supprimer le client</a><br />
             {% if entity.person is defined and entity.person is not null %}
                 <a href="{{ path('address_client_add', {'personId': entity.person.id })}}">Ajouter une addresse</a><br />
                 <a href="{{ path('phone_number_client_add', {'personId': entity.person.id })}}">Ajouter un numero de telephone</a>
