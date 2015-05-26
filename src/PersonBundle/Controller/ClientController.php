@@ -3,12 +3,13 @@
 namespace PersonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use CommonBundle\Controller\CrudBaseController;
 use PersonBundle\Form\ClientType;
 use PersonBundle\Entity\Client;
-use PersonBundle\Entity\Person;
 
 /**
  * @Route("/client")
@@ -76,7 +77,7 @@ class ClientController extends CrudBaseController
     {
         return parent::editAction($request,$id);
     }
-
+    
     /**
      * @Route("/delete/{id}", name="client_delete")
      * @Template("PersonBundle:Client:delete.html.twig")
@@ -84,5 +85,27 @@ class ClientController extends CrudBaseController
     public function deleteAction(Request $request, $id)
     {
         return parent::deleteAction($request, $id);
+    }
+    
+    /**
+     * @Route("/edit_name/{id}/{value}/{field}", name="client_edit_name")
+     * @Method({"POST"})
+     */
+    public function editNameAction($id, $value, $field)
+    {
+//        var_dump($id);die;
+        // TODO use reflection
+        $setter = 'set'.$field;
+        $entity = $this->getRepository()->find($id);
+        
+        $entity->getPerson()->$setter($value);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($entity);
+        $em->flush();
+        
+        //prepare the response, e.g.
+        $response = array("code" => 100, "success" => true);
+        //you can return result as JSON
+        return new Response(json_encode($response)); 
     }
 }
