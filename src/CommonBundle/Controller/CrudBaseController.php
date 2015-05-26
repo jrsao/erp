@@ -41,9 +41,6 @@ abstract class CrudBaseController extends Controller
             return  $this->redirect($this->generateUrl($route, array('id' => $entity->getId()), 301));
         }
         
-        $form = $this->createForm($this->getFormType(), $entity);
-        $form->add('save', 'submit');
-        
         return array('form' => $form->createView()); 
     }
     
