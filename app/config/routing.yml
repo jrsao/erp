@@ -17,3 +17,9 @@ site:
     resource: "@SiteBundle/Controller/"
     type:     annotation
     prefix:   /
+
+common_bundle_directive_property_template:
+    path: /directivePropertyTemplate
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    'CommonBundle:Macro:template.html.twig'
