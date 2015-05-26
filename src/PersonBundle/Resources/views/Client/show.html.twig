@@ -3,14 +3,24 @@
 {% block pageTitle %}Client {{ entity.person.lastName }}{% endblock pageTitle %}
 
 {% block leftSide %} {{ block('showActions') }} {% endblock leftSide %}
-
+{#{% import 'CommonBundle:Macro:show.html.twig' as show %}#}
 {% block body %}
-    {{ show.property('Prenom', entity.person.firstName) }}
-    {{ show.property('Nom', entity.person.lastName) }}
-    {{ show.property('Date de Naissance', entity.person.birthday.date) }}
-    {{ show.property('Id', entity.Id) }}
-    {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
-    
+        {#    <script>
+                var app = angular.module("myApp", []);
+            </script>
+            <div  ng-app="myApp" >#}
+
+        {{ show.property('Prenom', entity.person.firstName) }}
+        {{ show.property('Nom', entity.person.lastName) }}
+
+        {#test angular directive#}
+        {#    {{ show.test('Prenom', entity.person.firstName, 'FirstName', entity.id, 'client_edit_name') }}#}
+
+        {{ show.property('Date de Naissance', entity.person.birthday.date) }}
+        {{ show.property('Id', entity.Id) }}
+        {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
+        
+        {#    </div>#}
     {% include 'CoordinateBundle:Address:Partial/box.html.twig' with {'addresses' : entity.person.addresses} %}
     {% include 'CoordinateBundle:PhoneNumber:Partial/box.html.twig' with {'phoneNumbers' : entity.person.phoneNumbers} %}
 {% endblock body%}
