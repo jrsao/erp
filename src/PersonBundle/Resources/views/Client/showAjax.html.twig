@@ -1,0 +1,108 @@
+{% extends 'PersonBundle:Client:Common/layout.html.twig' %}
+
+{% block pageTitle %}Client {{ entity.person.lastName }}{% endblock pageTitle %}
+
+{% block leftSide %} {{ block('showActions') }} {% endblock leftSide %}
+
+{% block body %}
+    <script>
+        var app = angular.module("showApp", []);
+
+        app.directive('focusInput', function ($timeout) {
+            return {
+                scope: {},
+                link: function (scope, element, attrs) {
+                    element.bind('click', function () {
+                        $timeout(function () {
+                            var input = element.parent().parent().find('input')[0];
+                            input.setSelectionRange(input.value.length, input.value.length);
+                            input.focus();
+                        });
+                    });
+                }
+            };
+        });
+
+        app.directive('onSaveUpdateValue', function () {
+            return {
+                scope: {
+                    editableValue: "="
+                },
+                link: function (scope, element, attrs) {
+                    
+                },
+                template: '{{ '{{editableValue}}' }}'
+            }
+        });
+
+        app.controller("showCtrl", function ($scope, $http) {
+
+            $scope.counter = 0;
+            $scope.triggerableLabel = null;
+            $scope.value = '';
+            $scope.editorEnabled = false;
+            $scope.values = [];
+
+            $scope.init = function () {
+
+            }
+
+            $scope.enableEditor = function (value, label) {
+                console.log(label);
+                $scope.triggerableLabel = label;
+                $scope.value = value;
+                $scope.editorEnabled = true;
+                $scope.editableValue = $scope.value;
+            };
+
+            $scope.disableEditor = function () {
+                $scope.editorEnabled = false;
+            };
+
+            $scope.keyupListen = function (event) {
+                if (event.keyCode === 13) {
+                    $scope.save();
+                }
+            }
+
+            $scope.save = function (id, field, postRoute) {
+                $scope.value = $scope.editableValue;
+                $scope.disableEditor();
+
+                var url = '{{ path( 'client_edit_name', {'id': 'var_id', 'value':  "var_value", 'field' : 'var_field' }) }}';
+                url = url.replace("var_value", $scope.value);
+                url = url.replace("var_id", id);
+                url = url.replace("var_field", field);
+                url = url.replace("var_postRoute", postRoute);
+
+                $http({
+                    method: 'POST',
+                    url: url
+                })
+            };
+
+            $scope.isTriggerable = function (label) {
+                return $scope.editorEnabled &&
+                        $scope.triggerableLabel === label;
+            }
+
+        });
+
+
+    </script>
+
+    <div ng-app="showApp">
+        <div ng-controller="showCtrl">
+            {% import 'CommonBundle:Macro:show.html.twig' as show %}
+            {{ show.propertyInput('Prenom', entity.person.firstName, 'FirstName', entity.id, 'client_edit_name') }}
+            {{ show.propertyInput('Nom', entity.person.lastName, 'LastName', entity.id, 'client_edit_name') }}
+            {{ show.property('Date de Naissance', entity.person.birthday.date) }}
+            {{ show.property('Id', entity.Id) }}
+            {{ show.property("Date d'enregistrement", entity.registerDate.date) }}
+        </div>
+    </div>
+
+    {% include 'CoordinateBundle:Address:Partial/box.html.twig' with {'addresses' : entity.person.addresses} %}
+    {% include 'CoordinateBundle:PhoneNumber:Partial/box.html.twig' with {'phoneNumbers' : entity.person.phoneNumbers} %}
+
+{% endblock body%}
